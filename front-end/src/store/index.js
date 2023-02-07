@@ -258,7 +258,7 @@ export default new Vuex.Store({
           console.log('회원가입 완료')
           context.commit('ERASE_INFO')
           console.log(response.data.message)
-          this.$router.push({ name: 'login' })
+          this.$router.push({ name: 'onBoard' })
         })
         .catch((error) => {
           console.log(error)

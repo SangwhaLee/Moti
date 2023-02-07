@@ -10,6 +10,7 @@
   "dependencies": {
     "@vue/cli": "^5.0.8",
     "axios": "^1.2.6",
+    "cli": "^1.0.1",
     "core-js": "^3.8.3",
     "node-sass": "^8.0.0",
     "sass-loader": "^13.2.0",

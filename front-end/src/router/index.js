@@ -27,7 +27,7 @@ import MyPLMain from '@/components/MyPLMain'
 import MyPLMission from '@/components/MyPLMission'
 import NotFoundView from '@/views/NotFoundView'
 import FeedCreateView from '@/views/FeedCreateView'
-
+import OnBoardingView from "@/views/OnBoardingView"
 
 Vue.use(VueRouter)
 
@@ -52,6 +52,11 @@ const routes = [
         component: SignupNickname
       },
     ]
+  },
+  {
+    path: '/onBoarding',
+    name: 'onBoarding',
+    component: OnBoardingView,
   },
   {
     path: '/login',
