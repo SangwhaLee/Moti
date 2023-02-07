@@ -176,6 +176,52 @@ export default new Vuex.Store({
           console.log(`로그인 실패: status ${error.response.status}`)
         })
     },
+    // 카카오로그인
+    loginForKakao(context, payload) {
+      // UserDto 객체 정의
+      const UserDto = {
+        userId: payload.id,
+        password: payload.password,
+      }
+      this.$axios({
+        method: 'post',
+        url: `${this.$baseUrl}/users/socialLogin`,
+        data: UserDto,
+      })
+        .then((response) => {
+          if (response.status == '202') {
+            const payload = {
+              content: '아이디 또는 비밀번호를 확인해주세요.'
+            }
+            context.commit('MODAL_OPEN', payload)
+            console.log(`로그인 실패: status ${response.status}`)
+          } else {
+            console.log(`로그인 응답 status: ${response.status}`)
+            const payloadToken = {
+              accessToken: response.data['access-token'],
+              refreshToken: response.data['refresh-token'],
+            }
+            const payloadInfo = {
+              id: response.data.userId,
+              nickname: response.data.nickname,
+            }
+            context.commit('SAVE_TOKEN', payloadToken)
+            context.commit('GET_USER_INFO', payloadInfo)
+
+            // 피드 페이지로 이동
+            this.$router.push({ name: 'feed' })
+            }
+        })
+        .catch((error) => {
+          const payload = {
+              content: '알 수 없는 에러가 발생했습니다. 고객센터에 문의해주세요.'
+            }
+            context.commit('MODAL_OPEN', payload)
+          console.log(`로그인 실패: status ${error.response.status}`)
+        })
+    },
+
+
     // 로그아웃
     logout(context) {
       context.commit('LOGOUT')

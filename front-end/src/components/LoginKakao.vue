@@ -9,11 +9,10 @@
 
 <script>
 import { mapActions } from "vuex";
-const memberStore = "memberStore";
 export default {
   name: "LoginKakao",
   methods: {
-    ...mapActions(memberStore, ["socialLogin"]),
+    ...mapActions(["socialLogin"]),
     loginWithKakao() {
       window.Kakao.Auth.login({
         scope: "profile_nickname, account_email",
@@ -30,14 +29,13 @@ export default {
             this.makeToast("이메일을 필수로 선택해주셔야 카카오로 로그인이 가능합니다.");
             if (this.$route.path != "/") this.$router.push({ name: "home" });
           } else {
-            emails = emails.split("@");
             const req_body = {
               userId: "kakao_" + res.id,
               userName: kakao_account.profile.nickname,
-              emailId: emails[0],
-              emailDomain: emails[1],
+              email: emails,
               type: "kakao",
             };
+            console.log(res);
             this.loginForKakao(req_body);
           }
         },
