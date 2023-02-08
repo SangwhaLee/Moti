@@ -12,12 +12,12 @@ import { mapActions } from "vuex";
 export default {
   name: "LoginKakao",
   methods: {
-    ...mapActions(["socialLogin"]),
+    ...mapActions(["kakaoLogin"]),
     loginWithKakao() {
       window.Kakao.Auth.login({
         scope: "profile_nickname, account_email",
         success: this.getProfile,
-      });
+      })
     },
     getProfile() {
       window.Kakao.API.request({
@@ -26,30 +26,17 @@ export default {
           const kakao_account = res.kakao_account;
           let emails = kakao_account.email;
           if (emails == null) {
-            this.makeToast("이메일을 필수로 선택해주셔야 카카오로 로그인이 가능합니다.");
-            if (this.$route.path != "/") this.$router.push({ name: "home" });
+            if (this.$route.path != "/") this.$router.push({ name: "home" })
           } else {
             const req_body = {
               userId: "kakao_" + res.id,
               userName: kakao_account.profile.nickname,
               email: emails,
               type: "kakao",
-            };
-            console.log(res);
-            this.loginForKakao(req_body);
+            }
+            this.kakaoLogin(req_body)
           }
         },
-      });
-    },
-    loginForKakao(req_body) {
-      this.socialLogin(req_body);
-    },
-    makeToast(msg) {
-      this.$bvToast.toast(msg, {
-        title: "알림",
-        autoHideDelay: 1000,
-        appendToast: true,
-        variant: "warning",
       });
     },
   },

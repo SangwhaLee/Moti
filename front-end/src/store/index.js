@@ -177,21 +177,25 @@ export default new Vuex.Store({
         })
     },
     // 카카오로그인
-    loginForKakao(context, payload) {
+    kakaoLogin(context, payload) {
       // UserDto 객체 정의
+      console.log(payload)
       const UserDto = {
-        userId: payload.id,
-        password: payload.password,
+        userId: payload.userId,
+        nickname : payload.userName,
+        email : payload.email,
+        type : payload.type,
       }
+      console.log(UserDto)
       this.$axios({
         method: 'post',
-        url: `${this.$baseUrl}/users/socialLogin`,
+        url: `${this.$baseUrl}/users/kakao`,
         data: UserDto,
       })
         .then((response) => {
           if (response.status == '202') {
             const payload = {
-              content: '아이디 또는 비밀번호를 확인해주세요.'
+              content: '해당 이메일로 가입된 일반 사용자가 있습니다.'
             }
             context.commit('MODAL_OPEN', payload)
             console.log(`로그인 실패: status ${response.status}`)

@@ -28,7 +28,7 @@ import MyPLMission from '@/components/MyPLMission'
 import NotFoundView from '@/views/NotFoundView'
 import FeedCreateView from '@/views/FeedCreateView'
 import OnBoardingView from "@/views/OnBoardingView"
-
+import AuthGoogle from "@/components/AuthGoogle"
 Vue.use(VueRouter)
 
 const routes = [
@@ -57,6 +57,11 @@ const routes = [
     path: '/onBoarding',
     name: 'onBoarding',
     component: OnBoardingView,
+  },
+  {
+    path: '/auth/google',
+    name: 'authGoogle',
+    component: AuthGoogle,
   },
   {
     path: '/login',
